@@ -16,16 +16,18 @@ def home():
 @app.route('/about', methods = ['GET', 'POST'])
 def about():
     form = UploadForm()
+    global filename
     if request.method == 'POST' and form.validate_on_submit():
-        arch= form.archivo.data #Set?
-        filename = secure_filename(arch.filename)
-        arch.save(app.root_path+"/archivo/"+filename)
-        return render_template("datos.html")
+        arch= form.archivo.data
+        filename = secure_filename(arch.filename) #Nombre del Archivo 
+        arch.save(app.root_path+"./"+filename) #Donde se guarda
+        return redirect(url_for('datos'))
     return render_template("about.html", form=form)
 
 @app.route('/datos')
 def datos():
-    return render_template("datos.html")
+    lec = lecturaArchivo(filename)
+    return render_template("datos.html", lec=lec)
 
 if __name__ == '__main__':
     app.run(debug=True)
