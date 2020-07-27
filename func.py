@@ -1,8 +1,8 @@
+def lecturaArchivo(ar):
+    archivo = open(ar)
 
-archivo = open("datos.txt")
+    lectura = archivo.read()
 
-lectura = archivo.read()
+    archivo.close()
 
-archivo.close()
-
-print(lectura)
+    print(lectura)
