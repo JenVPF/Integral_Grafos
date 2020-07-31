@@ -3,8 +3,22 @@
 {% block content %}
 
 <div class="jumbotron">
-  <h1 class="display-4">Archivo recibido</h1>
-  <p>El Archivo dice: {{lec}}</p>
+  <div>
+    <h1 class="display-4">Archivo recibido</h1>
+    <p>El Archivo dice: {{Param}}</p>
+  </div>
+
+  <div>
+    <form action="" method="post" enctype="multipart/form-data">
+      {{ form.csrf_token }}
+         {{form.camion.label() }} {{form.camion()}}<br/>
+         {{form.centro.label() }} {{form.centro()}}<br/>
+         {{form.punto.label() }} {{form.punto()}}<br/>
+         {{form.productos.label() }} {{form.productos()}}<br/>
+  		<br/>
+  		  {{form.submit()}}
+    </form>
+  </div>
 </div>
 
 {% endblock%}
