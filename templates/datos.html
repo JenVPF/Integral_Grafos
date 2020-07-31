@@ -11,10 +11,8 @@
   <div>
     <form action="" method="post" enctype="multipart/form-data">
       {{ form.csrf_token }}
-         {{form.camion.label() }} {{form.camion()}}<br/>
-         {{form.centro.label() }} {{form.centro()}}<br/>
-         {{form.punto.label() }} {{form.punto()}}<br/>
-         {{form.productos.label() }} {{form.productos()}}<br/>
+         {{form.camion.label() }} {{form.camion()}} {{form.centro.label() }} {{form.centro()}} {{form.punto.label() }} {{form.punto()}} {{form.productos.label() }} {{form.productos()}}<br/>
+         
   		<br/>
   		  {{form.submit()}}
     </form>

@@ -28,10 +28,13 @@ def about():
 def datos():
     form = DetalleForm()
     Param = lecturaArchivo(filename) #Arreglo de Clases
+    
 
     #Variables
     List_C = []
     List_P = []
+    List_IC = []
+    List_IP = []
     aux = Parametros()
 
     for i in range(0,len(Param)):
@@ -40,7 +43,17 @@ def datos():
             List_C.append(aux)
         else: 
             List_P.append(aux)
+    #T;N;X,Y
+    for i in range(0,len(List_C)):
+        aux = List_C[i]
+        List_IC.append(aux.N)
     
+    for i in range(0,len(List_P)):
+        aux = List_P[i]
+        List_IP.append(aux.N)
+
+    if request.method == 'POST':
+        form.centro.choices = [(key, List_IC[key]) for key in range(len(List_IC))]
 
     if request.method == 'GET' and form.validate_on_submit():
         camion = form.camion.data
