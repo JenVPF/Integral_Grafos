@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 #Formulario
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 #Llamada Funciones
 from forms import UploadForm, DetalleForm
 from func import lecturaArchivo, Parametros
@@ -20,7 +20,7 @@ def about():
     if request.method == 'POST' and form.validate_on_submit():
         arch= form.archivo.data
         filename = secure_filename(arch.filename) #Nombre del Archivo 
-        arch.save(app.root_path+"./"+filename) #Donde se guarda
+        arch.save(app.root_path+"./static/archivos/"+filename) #Donde se guarda
         return redirect(url_for('datos'))
     return render_template("about.html", form=form)
 
@@ -29,38 +29,38 @@ def datos():
     form = DetalleForm()
     Param = lecturaArchivo(filename) #Arreglo de Clases
     
-
+    #crea dict tipo {Centro:{PtoVenta:Distancia}}
     #Variables
-    List_C = []
-    List_P = []
-    List_IC = []
-    List_IP = []
+    Centros = {} #Dic Centros {N:[x,y]}
+    Puntos = {} #Dic Puntos {N:[x,y]}
     aux = Parametros()
+    message = ''
+
+    print('Arreglo de clases: ', Param)
 
     for i in range(0,len(Param)):
         aux = Param[i]
-        if aux.T == 'C': 
-            List_C.append(aux)
-        else: 
-            List_P.append(aux)
-    #T;N;X,Y
-    for i in range(0,len(List_C)):
-        aux = List_C[i]
-        List_IC.append(aux.N)
+        k = aux.N
+        if aux.T == 'C':
+            Centros[k] = [aux.X,aux.Y]
+        else:
+            Puntos[k] = [aux.X,aux.Y]
     
-    for i in range(0,len(List_P)):
-        aux = List_P[i]
-        List_IP.append(aux.N)
+    form.centro.choices = [(key, 'C'+str(key)) for key in Centros.keys()]
+    form.punto.choices = [(key, 'P'+str(key)) for key in Puntos.keys()]
 
-    if request.method == 'POST':
-        form.centro.choices = [(key, List_IC[key]) for key in range(len(List_IC))]
+    #if request.method == 'POST':
+        #[(i,'q'+str(i-1)) for i in range(len(transitions1)+1)]
+        #trans.origen1.choices[0] = (0,'-')
 
-    if request.method == 'GET' and form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         camion = form.camion.data
         centro = form.centro.data
         punto = form.punto.data
         productos = form.productos.data
-    return render_template("datos.html", Param=Param, form=form)
+        message = 'El camion '+str(camion)+' esta asignado a el Centro de distribucion '+str(centro)+' y va al Punto de venta '+str(punto)+' llevando '+str(productos)+' productos'
+        
+    return render_template("datos.html", form=form, message=message)
 
 if __name__ == '__main__':
     app.run(debug=True)

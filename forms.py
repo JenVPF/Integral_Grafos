@@ -10,8 +10,8 @@ class UploadForm(FlaskForm):
 
 class DetalleForm(FlaskForm):
     camion = StringField('Camion', validators = [])
-    centro = SelectField('Centro Distribucion', choices = [(0,'--')])
-    punto = SelectField('Punto de Ventas', choices = [(0,'--')])
+    centro = SelectField('Centro Distribucion', choices = [(0,'-')])
+    punto = SelectField('Punto de Ventas', choices = [(0,'-')])
     productos = IntegerField('Cantidad de Productos', validators = [])
 
-    submit = SubmitField('Subir')
+    submit = SubmitField('+')

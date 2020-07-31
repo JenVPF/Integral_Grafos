@@ -4,19 +4,27 @@ class Parametros:
         self.N = N
         self.X = X
         self.Y = Y
+    def mostrar(self):
+        print(self.T)
+        print(self.N)
+        print(self.X)
+        print(self.Y)
 
 def lecturaArchivo(ar):
     archivo = open(ar)
     Rutas = []
-    Datos = Parametros()
     for linea in archivo:
         dato = linea.split(';') #Separo la linea por los ; y lo guardo en un arreglo
-        Datos.T = dato[0] #Guardo los datos del arreglo en la clase
-        Datos.N = dato[1]
-        C = dato[2].split(',') #Separo las coordenadas por la , 
-        Datos.X=int(C[0]) #Guardo coordenada X 
-        Datos.Y=int(C[1]) #Guardo coordenada Y
-        Rutas.append(Datos)
-
+        R = Almacenar(dato)
+        Rutas.append(R)
     archivo.close()
     return Rutas
+
+def Almacenar(linea):
+    Datos = Parametros()
+    Datos.T = linea[0] #Guardo los datos del arreglo en la clase
+    Datos.N = linea[1]
+    C = linea[2].split(',') #Separo las coordenadas por la , 
+    Datos.X=int(C[0]) #Guardo coordenada X 
+    Datos.Y=int(C[1]) #Guardo coordenada Y
+    return Datos
