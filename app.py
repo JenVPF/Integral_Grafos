@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 #Llamada Funciones
 from forms import UploadForm, DetalleForm
-from func import lecturaArchivo, Parametros
+from func import lecturaArchivo, Parametros, Conexion
 from config import Config
 
 app = Flask(__name__)
@@ -38,27 +38,27 @@ def datos():
     aux = Parametros()
     message = ''
     global conexiones
-    conexiones = {}
+    conexiones = Conexion()
 
-    if request.method == 'GET':
-        for i in range(0,len(Param)):
-            aux = Param[i]
-            k = aux.N
-            if aux.T == 'C':
-                Centros[k] = [aux.X,aux.Y]
-            else:
-                Puntos[k] = [aux.X,aux.Y]
-        #print('Arreglo de clases: ', Param)
-        form.camion.choices = [(key+1, str(key+1)) for key in range(num_camiones)]
-        form.centro.choices = [(key, 'C'+str(key)) for key in Centros.keys()]
-        form.punto.choices = [(key, 'P'+str(key)) for key in Puntos.keys()]
+    for i in range(0,len(Param)):
+        aux = Param[i]
+        k = aux.N
+        if aux.T == 'C':
+            Centros[k] = [aux.X,aux.Y]
+        else:
+            Puntos[k] = [aux.X,aux.Y]
+    #print('Arreglo de clases: ', Param)
+    form.camion.choices = [(key+1, str(key+1)) for key in range(num_camiones)]
+    form.centro.choices = [(key, 'C'+str(key)) for key in Centros.keys()]
+    form.punto.choices = [(key, 'P'+str(key)) for key in Puntos.keys()]
 
     if request.method == 'POST' and form.validate_on_submit():
         ruta = []
-        camion = form.camion.data
-        centro = form.centro.data
-        punto = form.punto.data
-        productos = form.productos.data
+        camion = form.camion.data #Id_Camion
+        centro = form.centro.data #Id_Centro
+        punto = form.punto.data #Id_Punto
+        productos = form.productos.data #Cant_Productos
+        
         message = 'El camion '+str(camion)+' esta asignado a el Centro de distribucion '+str(centro)+' y va al Punto de venta '+str(punto)+' llevando '+str(productos)+' productos'
         
         for k in range(0,len(Param)):
@@ -70,7 +70,10 @@ def datos():
         
         ruta.append(productos)
         conexiones[camion]=ruta
-        return redirect(url_for('rutas'))
+    
+    if request.method == 'POST' and request.form.get('enviar', True) == 'Enviar' :
+        return redirect('rutas')
+    
 
     return render_template("datos.html", form=form, message=message)
 

@@ -1,3 +1,10 @@
+class Conexion:
+    def init(self, idCam, idCen, Pun, Prod):
+        self.idCam = idCam
+        self.idCen = idCen
+        self.Pun = Pun
+        self.Prod = Prod
+    
 class Parametros:
     def init(self, T, N, X, Y):
         self.T = T
