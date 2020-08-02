@@ -1,14 +1,4 @@
-class Parametros:
-    def init(self, T, N, X, Y):
-        self.T = T #C o P
-        self.N = N #Id int
-        self.X = X #coordenada x int
-        self.Y = Y #coordenada y int
-    def mostrar(self):
-        print(self.T)
-        print(self.N)
-        print(self.X)
-        print(self.Y)
+import pandas as pd 
 
 class Conexion:
     def init(self, idCam, idCen, Punto, Cant, Dis):
@@ -24,23 +14,12 @@ class Conexion:
         print('Cantidad: ', self.Cant)
 
 def lecturaArchivo(ar):
-    archivo = open(ar)
-    Rutas = []
-    for linea in archivo:
-        dato = linea.split(';') #Separo la linea por los ; y lo guardo en un arreglo
-        R = Almacenar(dato)
-        Rutas.append(R)
-    archivo.close()
-    return Rutas
+    archivo = pd.read_csv(ar, sep=';', names=["T", "N", "X,Y"])
+    archivo['X,Y']=archivo['X,Y'].str.split(',')
+    print(archivo)
+    print('')
 
-def Almacenar(linea):
-    Datos = Parametros()
-    Datos.T = linea[0] #Guardo los datos del arreglo en la clase
-    Datos.N = linea[1]
-    C = linea[2].split(',') #Separo las coordenadas por la , 
-    Datos.X=int(C[0]) #Guardo coordenada X 
-    Datos.Y=int(C[1]) #Guardo coordenada Y
-    return Datos
+    return archivo
 
 def ordenarDatos(datos): #datos es la lista
     aux = set(datos)

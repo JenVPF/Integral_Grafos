@@ -2,3 +2,4 @@ Flask
 WTForms
 Werkzeug
 networkx
+pandas
