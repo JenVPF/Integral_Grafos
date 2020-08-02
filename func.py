@@ -1,10 +1,3 @@
-class Conexion:
-    def init(self, idCam, idCen, Pun, Prod):
-        self.idCam = idCam
-        self.idCen = idCen
-        self.Pun = Pun
-        self.Prod = Prod
-    
 class Parametros:
     def init(self, T, N, X, Y):
         self.T = T
@@ -16,6 +9,18 @@ class Parametros:
         print(self.N)
         print(self.X)
         print(self.Y)
+
+class Conexion:
+    def init(self, idCam, idCen, Punto, Cant):
+        self.idCam = idCam
+        self.idCen = idCen
+        self.Punto = Punto
+        self.Cant = Cant
+    def mostrar(self):
+        print('Camion: ', self.idCam)
+        print('Centro:', self.idCen)
+        print('Punto: ', self.Punto)
+        print('Cantidad: ', self.Cant)
 
 def lecturaArchivo(ar):
     archivo = open(ar)
@@ -35,3 +40,4 @@ def Almacenar(linea):
     Datos.X=int(C[0]) #Guardo coordenada X 
     Datos.Y=int(C[1]) #Guardo coordenada Y
     return Datos
+
