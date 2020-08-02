@@ -1,9 +1,9 @@
 class Parametros:
     def init(self, T, N, X, Y):
-        self.T = T
-        self.N = N
-        self.X = X
-        self.Y = Y
+        self.T = T #C o P
+        self.N = N #Id int
+        self.X = X #coordenada x int
+        self.Y = Y #coordenada y int
     def mostrar(self):
         print(self.T)
         print(self.N)
@@ -11,11 +11,12 @@ class Parametros:
         print(self.Y)
 
 class Conexion:
-    def init(self, idCam, idCen, Punto, Cant):
-        self.idCam = idCam
-        self.idCen = idCen
-        self.Punto = Punto
-        self.Cant = Cant
+    def init(self, idCam, idCen, Punto, Cant, Dis):
+        self.idCam = idCam #int
+        self.idCen = idCen 
+        self.Punto = Punto 
+        self.Cant = Cant 
+        self.Dis = Dis
     def mostrar(self):
         print('Camion: ', self.idCam)
         print('Centro:', self.idCen)
@@ -40,4 +41,12 @@ def Almacenar(linea):
     Datos.X=int(C[0]) #Guardo coordenada X 
     Datos.Y=int(C[1]) #Guardo coordenada Y
     return Datos
+
+def ordenarDatos(datos): #datos es la lista
+    aux = set(datos)
+    aux1 = []
+    for i in aux:
+        aux1.append(i)
+    aux1 = sorted(aux1)
+    return aux1
 

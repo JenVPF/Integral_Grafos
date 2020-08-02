@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import SubmitField, FileField, IntegerField, SelectField, StringField
 #Guardar, Cargar Archivo, Numero, Lista desplegable, string
 from wtforms.validators import Required	
+from werkzeug.datastructures import MultiDict
 
 class UploadForm(FlaskForm):
     archivo = FileField('Archivo', validators = [Required("Tienes que subir el archivo")])

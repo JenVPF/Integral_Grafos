@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 #Llamada Funciones
 from forms import UploadForm, DetalleForm
-from func import lecturaArchivo, Parametros, Conexion
+from func import lecturaArchivo, Parametros, Conexion, ordenarDatos
 from config import Config
 
 app = Flask(__name__)
@@ -19,10 +19,8 @@ def about():
     form = UploadForm()
     global filename
     global num_camiones
-    global conexiones
-    conexiones = Conexion()
     global ruta
-    ruta = []
+    ruta = [] #clases conexion
 
     if request.method == 'POST' and form.validate_on_submit():
         arch= form.archivo.data
@@ -37,12 +35,13 @@ def datos():
     #Formulario
     form = DetalleForm()
     #Variables
+    global conexiones
+    conexiones = Conexion()
     Param = lecturaArchivo("./static/archivos/"+filename) #Arreglo de Clases
     Centros = {} #Dic Centros {N:[x,y]}
     Puntos = {} #Dic Puntos {N:[x,y]}
     aux = Parametros()
-    aux1 = Parametros()
-    aux2 = Conexion()
+    aux1 = Conexion()
     message = ''
     message2 = ''
     Pun = []
@@ -55,7 +54,7 @@ def datos():
             Centros[k] = [aux.X,aux.Y]
         else:
             Puntos[k] = [aux.X,aux.Y]
-
+    
     #print('Arreglo de clases: ', Param)
     form.camion.choices = [(key+1, str(key+1)) for key in range(num_camiones)]
     form.centro.choices = [(key, 'C'+str(key)) for key in Centros.keys()]
@@ -71,37 +70,40 @@ def datos():
         message = 'El camion '+str(camion)+' esta asignado a el Centro de distribucion '+str(centro)+' y va al Punto de venta '+str(punto)+' llevando '+str(productos)+' productos'
         
         if ruta: #No vacio, buscar el dato guardado
-            #Opcion no esta vacio pero el dato es nuevo
-            for k in range(0, len(ruta)):
-                aux2 = ruta[k]
-                if(aux2.idCam == camion): #Si estamos en el mismo camion
-                    aux = aux2.idCen #Centro al que esta asignado ese camion 
-                    if(aux.N == centro): #Si es el mismo centro que el camion 
-                        for j in range(0,len(Param)): #Busco el nueo Punto que se añadio 
-                            aux1 = Param[j]
-                            Pun = aux2.Punto #Saco el arreglo guardado
-                            Prod = aux2.Cant
-                            if punto==aux1.N:
-                                Pun.append(aux1) #Añado el Punto a la lista
-                                Prod.append(productos) #Añado el producto a la lista 
-                                aux2.Cant = Prod
-                                aux2.Punto = Pun
-                        ruta.append(aux2)
-                    else: #Si no es el mismo centro que el camion 
+            for i in ruta:
+                aux1 = ruta.pop()
+                if(aux1.idCam == camion): #Mismo Camion
+                    print('Lista llena y mismo camion que el anterior')
+                    if(aux1.idCen == centro): #Mismo centro
+                        Pun = aux1.Punto
+                        Prod = aux1.Cant
+                        Pun.append(punto)
+                        Prod.append(productos)
+                        aux1.Punto = Pun
+                        aux1.Cant = Prod
+                    else: #no es el mismo centro anterior
                         message2 = 'Un camion se puede asignar solo a un Centro de distribucion, intente nuevamente'
+                ruta.append(aux1)
+                if(aux1.idCam != camion):
+                    print('lista llena y camion distinto al anterior')
+                    conexiones.idCam = camion
+                    conexiones.idCen = centro
+                    Pun.append(punto)
+                    Prod.append(productos)
+                    conexiones.Punto = Pun
+                    conexiones.Cant = Prod
+                    ruta.append(conexiones)
         else: #Vacio 
-            conexiones.idCam = camion #Añade IdCamion a la clase 
-            Prod.append(productos) #Añado el producto a la lista
-            conexiones.Cant = Prod #Añado la lista a la Clase
-            for k in range(0,len(Param)):
-                aux = Param[k]
-                if centro==aux.N:
-                    conexiones.idCen = aux #Añado el Centro a la Clase
-                if punto==aux.N:
-                    Pun.append(aux) #Añado el Punto a la lista
-                    conexiones.Punto = Pun #Añado la lista a la Clase
+            print('lista vacia')
+            conexiones.idCam = camion
+            conexiones.idCen = centro
+            Pun.append(punto)
+            Prod.append(productos)
+            conexiones.Punto = Pun
+            conexiones.Cant = Prod
             ruta.append(conexiones)
-    
+
+        #return redirect(url_for('datos'))
     if request.method == 'POST' and request.form.get('enviar', True) == 'Enviar' :
         return redirect('rutas')
 
@@ -111,6 +113,19 @@ def datos():
 def rutas():
     aux = Conexion()
     print(ruta)
+    for i in ruta: 
+        aux = i 
+        aux.mostrar()
+    """for i in ruta:
+        aux = ruta.pop()
+        print('###########')
+        aux.mostrar()
+        aux.Punto = ordenarDatos(aux.Punto)
+        aux.Cant = ordenarDatos(aux.Cant)
+        print('###########')
+        aux.mostrar()
+        ruta.append(aux)"""
+    
     return render_template("rutas.html")
 
 if __name__ == '__main__':
