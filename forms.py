@@ -15,4 +15,4 @@ class DetalleForm(FlaskForm):
     punto = SelectField('Punto de Ventas', choices = [(0,'--')])
     productos = IntegerField('Cantidad de Productos', validators = [])
 
-    submit = SubmitField('+')
+    agregar = SubmitField('+')
