@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 #Llamada Funciones
 from forms import UploadForm, DetalleForm
-from func import lecturaArchivo, validacionString, validarPuntos
+from func import lecturaArchivo, validacionString, validarPuntos, distancia_de_lista, CDconCoordenadasdePV, DistanciasEntreNodos
 from config import Config
 import pandas as pd
 app = Flask(__name__)
