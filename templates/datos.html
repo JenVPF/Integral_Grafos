@@ -2,33 +2,49 @@
 
 {% block content %}
 
-<div class="jumbotron">
-  <div>
-    <h1 class="display-4">Archivo recibido</h1>
-  </div>
-  <div>
-    Centros:
-    {% for table in T1 %}
-      {{ table|safe }}
-    {% endfor %}
-    Puntos:
-    {% for table in T2 %}
-      {{ table|safe }}
-    {% endfor %}
-  </div>
-  <div>
-    <form action="" method="POST">
-      {{ form.csrf_token }}
-         {{form.camion.label() }} {{form.camion()}} {{form.centro.label() }} {{form.centro()}} {{form.punto.label() }} {{form.punto()}} {{form.productos.label() }} {{form.productos()}} {{form.agregar(class="btn btn-success")}}<br/>
-      <br/>
-      <div>
-        Ingreso: {{ message }}
-        {{ message2 }}
-      </div>
-      <br/>
-      <input class="btn btn-outline-primary" type = "submit" name = "enviar" value = "Enviar"/>
-    </form>
-  </div>
-</div>
 
+
+<div class="jumbotron">
+
+  <div align='center'>
+            <h1 class="display-4">Archivo recibido</h1>
+          </p>
+          <hr style="width:75%;">
+          <p>
+
+            A continuacion elija un <strong>Centro de Distribución</strong>, y elija los <strong>Puntos de Ventas</strong> que mostraran a en las siguientes <strong>Tablas:</strong> 
+        
+          <div class="table">
+            Tabla respectiva de los <strong>Centro de Distribución:</strong>
+            {% for table in T1 %}
+              {{ table|safe }}
+            {% endfor %}
+          </div>
+
+          <div class="table">  
+            Tabla respectiva de los <strong>Puntos de Ventas:</strong>
+            {% for table in T2 %}
+              {{ table|safe }}
+            {% endfor %}
+          </div>
+
+          </p>
+          <hr style="width:75%;">
+          <p>
+
+          <form action="" method="POST">
+            {{ form.csrf_token }}
+                {{form.camion.label() }} {{form.camion()}} {{form.centro.label() }} {{form.centro()}} {{form.punto.label() }} {{form.punto()}} {{form.productos.label() }} {{form.productos()}} {{form.agregar(class="btn btn-success")}}<br/>
+            <br/>
+            <div>
+              Ingreso: {{ message }}
+              {{ message2 }}
+            </div>
+            <br/>
+            <input class="btn btn-outline-primary" type = "submit" name = "enviar" value = "Enviar"/>
+          </form>
+          </div>
+</div>
+</div>
+</div>
 {% endblock%}
