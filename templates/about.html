@@ -7,9 +7,7 @@
     <form action="" method="post" enctype="multipart/form-data">
         {{ form.csrf_token }}
         Ingresar Archivo: {{ form.archivo.label() }} {{ form.archivo() }}<br/>
-    
-        Ingrese la cantidad de camiones: {{ form.cant_camiones.label() }} {{ form.cant_camiones(placeholder="Ej: 3") }}<br/>
-
+        
         {{ form.submit(Class="btn btn-primary",value = "Siguiente") }}
 
     </form>
