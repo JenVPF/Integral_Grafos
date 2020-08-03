@@ -8,7 +8,7 @@
         {{ form.csrf_token }}
         Archivo: {{ form.archivo.label() }} {{ form.archivo() }}<br/>
     
-        Ingrese la cantidad de camiones: {{ form.cant_camiones.label() }} {{ form.cant_camiones() }}<br/>
+        Ingrese la cantidad de camiones: {{ form.cant_camiones.label() }} {{ form.cant_camiones(placeholder="Ej: 3") }}<br/>
 
         {{ form.submit }}
     </form>
