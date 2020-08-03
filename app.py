@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 #Llamada Funciones
 from forms import UploadForm, DetalleForm
-from func import lecturaArchivo, validacionString, validarPuntos, distancia_de_lista, CDconCoordenadasdePV, DistanciasEntreNodos
+from func import lecturaArchivo, validacionString, validarPuntos, distancia_de_lista, CDconCoordenadasdePV, DistanciasEntreNodos, ordenarCentros, ordenarPuntos
 from config import Config
 import pandas as pd
 app = Flask(__name__)
@@ -109,7 +109,9 @@ def rutas():
     print(chr(27)+"[;34m"+"Valores Asignados: ",Asignacion)
     centros = {}
     puntos = {}
-    return render_template("rutas.html", Asignacion=Asignacion)
+    centros = ordenarCentros(Asignacion)
+    puntos = ordenarPuntos(Asignacion)
+    return render_template("rutas.html", Asignacion=Asignacion, centros=centros, puntos=puntos)
 
 if __name__ == '__main__':
     app.run(debug=True,port=3000)

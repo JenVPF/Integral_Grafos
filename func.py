@@ -36,6 +36,25 @@ def validarPuntos(P,Pun):
     else: 
         return False
 
+def ordenarCentros(dic):
+  dato = []
+  Centros = {}
+  for key in dic:
+    dato = dic[key]
+    Centros[key] = dato[0]
+  return Centros
+
+def ordenarPuntos(dic):
+  dato = dic.values()
+  dato = list(dato)
+  Puntos = {}
+  for key in dato:
+    key2 = key[0]
+    key3 = key[1]
+    for i in range(0,len(key2)):
+      Puntos[key2[i]]= key3[i]
+  return Puntos
+
 def distancia_de_lista(venta_original):##Entra una lista en forma [('nodo1',x,y),('nodo2',x,y)]
     lista = []
     for i in venta_original:  #Recorre la lista
