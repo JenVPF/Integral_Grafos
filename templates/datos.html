@@ -10,11 +10,26 @@
   <div>
     <form action="" method="POST">
       {{ form.csrf_token }}
-         {{form.camion.label() }} {{form.camion()}} {{form.centro.label() }} {{form.centro()}} {{form.punto.label() }} {{form.punto()}} {{form.productos.label() }} {{form.productos()}} {{form.agregar(class="btn btn-success")}}<br/>
+        {{form.centro.label() }} {{form.centro()}}<br/>
+        {{form.camion.label() }} {{form.camion()}} {{form.punto.label()}} {{form.punto()}} {{form.productos.label()}} {{form.productos()}} {{form.agregar(class="btn btn-success")}}<br/>
       <br/>
       <div>
-        Ingreso: {{ message }}
-        {{ message2 }}
+        Ingreso: {{ message }}<br/>
+        {% if message2 %} 
+					<div class="alert alert-primary" role="alert">
+						{{ message2 }}<br/>
+					</div>
+        {% endif %}
+        {% if message3 %} 
+					<div class="alert alert-primary" role="alert">
+						{{ message3 }}<br/>
+					</div>
+        {% endif %}
+        {% if message4 %} 
+					<div class="alert alert-primary" role="alert">
+						{{ message4 }}<br/>
+					</div>
+        {% endif %}
       </div>
       <br/>
       <input class="btn btn-outline-primary" type = "submit" name = "enviar" value = "Enviar"/>

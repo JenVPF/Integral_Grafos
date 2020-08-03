@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 #Llamada Funciones
 from forms import UploadForm, DetalleForm
-from func import lecturaArchivo, Conexion, ordenarDatos
+from func import lecturaArchivo, Conexion, ordenarDatos, validacionString, validarPuntos
 from config import Config
 import pandas as pd
 app = Flask(__name__)
@@ -19,7 +19,8 @@ def about():
     form = UploadForm()
     global filename
     global num_camiones
-
+    global Camiones
+    Camiones = {}
     global ruta
     ruta = [] #clases conexion
 
@@ -36,19 +37,23 @@ def datos():
     #Formulario
     form = DetalleForm()
     #Variables
-    global conexiones
-    conexiones = Conexion()
     TablaI = lecturaArchivo("./static/archivos/"+filename) #Tabla Inicial desde el TXT
     Centros = {} #Dic Centros {N:[x,y]}
     Puntos = {} #Dic Puntos {N:[x,y]}
 
-    #Stan By
-    aux1 = Conexion()
     message = ''
     message2 = ''
+    message3 = ''
+    message4 = ''
+
     Pun = []
     Prod = []
+    datos = []
+    datos2 = []
 
+    #Stan By
+    aux1 = Conexion()
+    
     #Llenando los diccionarios Centros y Puntos
     for n in range(0,len(TablaI.index)): #Index es para el largo de las filas
         if(TablaI["T"][n]== 'C'):
@@ -64,47 +69,57 @@ def datos():
     #TABLAS CENTROS Y PUNTOS
     C = pd.DataFrame( (key, Centros[key]) for key in Centros.keys() )
     C.columns = ["N", "X,Y"]
-    print('Centros: ')
-    print(C)
-    print('')
+    #print('Centros: ')
+    #print(C)
+    #print('')
     P = pd.DataFrame( (key, Puntos[key]) for key in Puntos.keys() )
     P.columns = ["N", "X,Y"]
-    print('Puntos: ')
-    print(P)
+    #print('Puntos: ')
+    #print(P)
 
     if request.method == 'POST' and form.validate_on_submit():
 
-        camion = form.camion.data #Id_Camion
-        centro = form.centro.data #Id_Centro
-        punto = form.punto.data #Id_Punto
-        productos = form.productos.data #Cant_Productos
+        camion = form.camion.data #Id_Camion int
+        centro = form.centro.data #Id_Centro int 
+        punto = form.punto.data #Id_Punto string
+        productos = form.productos.data #Cant_Productos string
         
         message = 'El camion '+str(camion)+' esta asignado a el Centro de distribucion '+str(centro)+' y va al Punto de venta '+str(punto)+' llevando '+str(productos)+' productos'
 
+        if(validacionString(punto)==True and validacionString(productos)==True): #Valido que los Puntos y Productos se ingresaron correctamente
+            print('Datos Validos')
+            Pun = punto.split(',')
+            Prod = productos.split(',')
+            if(len(Pun)==len(Prod)):
+                print(P)
+                print('')
+                print('Puntos: ', Pun)
+                if(validarPuntos(P,Pun)==True):
+                    print('Valido')
+                    datos.append(Pun) #Puntos Guardados
+                    #Camion: [Centro,Puntos,Productos]
+                    datos2.append(centro)
+                    datos2.append(Pun) 
+                    datos2.append(Prod)
+                    Camiones[camion] = datos2
+                else:
+                    message3='Un Punto de venta ingresado no es valido'
+            else:
+                message4 = 'Ingrese la misma cantidad de Puntos de venta y Productos'
+                        
+            print(Camiones)
+        else: 
+            message2 = 'Ingrese un formato valido'
         #return redirect(url_for('datos'))
     if request.method == 'POST' and request.form.get('enviar', True) == 'Enviar' :
         return redirect('rutas')
 
-    return render_template("datos.html", form=form, message=message, message2=message2)
+    return render_template("datos.html", form=form, message=message, message2=message2, message3=message3, message4=message4)
 
 @app.route('/rutas', methods = ['GET', 'POST'])
 def rutas():
-    aux = Conexion()
-    print(ruta)
-    for i in ruta: 
-        aux = i 
-        aux.mostrar()
-    """for i in ruta:
-        aux = ruta.pop()
-        print('###########')
-        aux.mostrar()
-        aux.Punto = ordenarDatos(aux.Punto)
-        aux.Cant = ordenarDatos(aux.Cant)
-        print('###########')
-        aux.mostrar()
-        ruta.append(aux)"""
-    
-    return render_template("rutas.html")
+    print(Camiones)
+    return render_template("rutas.html", Camiones=Camiones)
 
 if __name__ == '__main__':
     app.run(debug=True,port=3000)
