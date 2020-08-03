@@ -6,11 +6,12 @@
     <h1>Formulario</h1>
     <form action="" method="post" enctype="multipart/form-data">
         {{ form.csrf_token }}
-        Archivo: {{ form.archivo.label() }} {{ form.archivo() }}<br/>
+        Ingresar Archivo: {{ form.archivo.label() }} {{ form.archivo() }}<br/>
     
         Ingrese la cantidad de camiones: {{ form.cant_camiones.label() }} {{ form.cant_camiones(placeholder="Ej: 3") }}<br/>
 
-        {{ form.submit }}
+        {{ form.submit(Class="btn btn-primary",value = "Siguiente") }}
+
     </form>
 </div>
 
