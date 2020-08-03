@@ -15,3 +15,4 @@ class DetalleForm(FlaskForm):
     productos = StringField('Cantidad de Productos', validators = [Required("No puede dejar el campo vacio")])
 
     agregar = SubmitField('+')
+
