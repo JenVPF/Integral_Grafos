@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 #Llamada Funciones
 from forms import UploadForm, DetalleForm
-from func import lecturaArchivo, Conexion, ordenarDatos, validacionString, validarPuntos
+from func import lecturaArchivo, validacionString, validarPuntos
 from config import Config
 import pandas as pd
 app = Flask(__name__)
@@ -21,8 +21,6 @@ def about():
     global num_camiones
     global Camiones
     Camiones = {}
-    global ruta
-    ruta = [] #clases conexion
 
     if request.method == 'POST' and form.validate_on_submit():
         arch= form.archivo.data
@@ -50,9 +48,6 @@ def datos():
     Prod = []
     datos = []
     datos2 = []
-
-    #Stan By
-    aux1 = Conexion()
     
     #Llenando los diccionarios Centros y Puntos
     for n in range(0,len(TablaI.index)): #Index es para el largo de las filas
