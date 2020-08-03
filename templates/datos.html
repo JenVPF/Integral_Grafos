@@ -41,8 +41,10 @@
 
           <form action="#trans" method="POST">
             {{ form.csrf_token }}
-                {{form.camion.label() }} {{form.camion()}} {{form.centro.label() }} {{form.centro()}}{{form.punto.label() }} {{form.punto(placeholder="Ej: 1,2,3")}}{{form.productos.label() }} {{form.productos(placeholder="Ej: 300,300,400")}} {{form.agregar()}}<br/>
-              
+                {{form.camion.label() }} {{form.camion()}} {{form.centro.label() }} {{form.centro()}}{{form.punto.label() }} 
+              <p>
+                {{form.punto(placeholder="Ej: 1,2,3")}}{{form.productos.label() }} {{form.productos(placeholder="Ej: 300,300,400")}} {{form.agregar()}}<br/>
+              </p>
            
                   <div>
                     Ingreso: {{ message }}<br/>
