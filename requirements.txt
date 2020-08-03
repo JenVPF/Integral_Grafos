@@ -1,5 +1,6 @@
 Flask 
 WTForms
+Flask-WTF
 Werkzeug
 networkx
 matplotlib
