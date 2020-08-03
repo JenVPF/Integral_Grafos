@@ -5,7 +5,7 @@
 
 
 <!--<div class="logmod__wrapper" id = trans>-->
-  <div class="jumbotron" id = trans>
+  <div class="jumbotron" >
   <div class="logmod__heading"> 
             <h1 class="display-4">Archivo recibido</h1>
               </p>
@@ -39,12 +39,12 @@
           <hr style="width:75%;">
           <p>
 
-          <form action="#trans" method="POST">
+          <form action="#trans" method="POST" id = trans>
             {{ form.csrf_token }}
                 {{form.camion.label() }} {{form.camion()}} {{form.centro.label() }} {{form.centro()}}{{form.punto.label() }} 
               <p>
                 {{form.punto(placeholder="Ej: 1,2,3")}}{{form.productos.label() }} {{form.productos(placeholder="Ej: 300,300,400")}} {{form.agregar()}}<br/>
-              </p>
+            </p>
            
                   <div>
                     Ingreso: {{ message }}<br/>
