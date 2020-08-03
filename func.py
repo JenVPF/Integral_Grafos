@@ -9,8 +9,6 @@ def lecturaArchivo(ar):
     archivo = pd.read_csv(ar, sep=';', names=["T", "N", "X,Y"])
     archivo['X,Y']=archivo['X,Y'].str.split(',')
     print(archivo)
-    print('')
-
     return archivo
 
 def validacionString(cadena): 
