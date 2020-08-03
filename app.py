@@ -109,7 +109,7 @@ def datos():
     if request.method == 'POST' and request.form.get('enviar', True) == 'Enviar' :
         return redirect('rutas')
 
-    return render_template("datos.html", form=form, message=message, message2=message2, message3=message3, message4=message4)
+    return render_template("datos.html", form=form, message=message, message2=message2,message3=message3,message4=message4,T1=[C.to_html(classes='data', header="true")], T2=[P.to_html(classes='data', header="true")])
 
 @app.route('/rutas', methods = ['GET', 'POST'])
 def rutas():
