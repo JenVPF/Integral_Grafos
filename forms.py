@@ -5,7 +5,7 @@ from wtforms.validators import Required
 from werkzeug.datastructures import MultiDict
 
 class UploadForm(FlaskForm):
-    archivo = FileField('Archivo', validators = [Required("Tienes que subir el archivo")])
+    archivo = FileField('', validators = [Required("Tienes que subir el archivo")])
     
     submit = SubmitField(' Enviar ')
 
