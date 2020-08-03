@@ -2,4 +2,6 @@ Flask
 WTForms
 Werkzeug
 networkx
+matplotlib
 pandas
+scipy
