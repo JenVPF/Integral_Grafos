@@ -6,7 +6,16 @@
   <div>
     <h1 class="display-4">Archivo recibido</h1>
   </div>
-
+  <div>
+    Centros:
+    {% for table in T1 %}
+      {{ table|safe }}
+    {% endfor %}
+    Puntos:
+    {% for table in T2 %}
+      {{ table|safe }}
+    {% endfor %}
+  </div>
   <div>
     <form action="" method="POST">
       {{ form.csrf_token }}
