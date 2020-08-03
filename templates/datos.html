@@ -1,77 +1,67 @@
 {% extends "layout.html" %}
-
 {% block content %}
 
-
-
 <!--<div class="logmod__wrapper" id = trans>-->
-  <div class="jumbotron" >
+<div class="jumbotron" >
   <div class="logmod__heading"> 
-            <h1 class="display-4">Archivo recibido</h1>
-              </p>
-            <hr style="width:75%;">
-              <p>
-
-                  A continuacion elija un <strong>Centro de Distribución</strong>, y elija los <strong>Puntos de Ventas</strong> que mostraran a en las siguientes <strong>Tablas:</strong> 
-                  <div class="logmod__container">  
+    <h1 class="display-4">Archivo recibido</h1>
+      </p>
+        <hr style="width:75%;">
+      <p>
+      A continuacion elija un <strong>Centro de Distribución</strong>, y elija los <strong>Puntos de Ventas</strong> que mostraran a en las siguientes <strong>Tablas:</strong> 
+      <div class="logmod__container">  
               
-          <div align='center'>
-                    <div class="table">
-                      Tabla respectiva de los <strong>Centro de Distribución:</strong>
-                      <br/>
-                      {% for table in T1 %}
-                        {{ table|safe }}
-                      {% endfor %}
-                    </div>
-
-                    <div class="table">  
-                      Tabla respectiva de los <strong>Puntos de Ventas:</strong>
-                      <br/>
-                      {% for table in T2 %}
-                        {{ table|safe }}
-                      {% endfor %}
-                    </div>
-          </div> 
-
-
-         
-          </p>
-          <hr style="width:75%;">
-          <p>
-
-          <form action="#trans" method="POST" id = trans>
-            {{ form.csrf_token }}
-                {{form.camion.label() }} {{form.camion()}} {{form.centro.label() }} {{form.centro()}}{{form.punto.label() }} 
-              <p>
-                {{form.punto(placeholder="Ej: 1,2,3")}}{{form.productos.label() }} {{form.productos(placeholder="Ej: 300,300,400")}} {{form.agregar()}}<br/>
-            </p>
-           
-                  <div>
-                    Ingreso: {{ message }}<br/>
-                    {% if message2 %} 
-                                <div class="alert alert-primary" role="alert">
-                                    {{ message2 }}<br/>
-                                </div>
-                    {% endif %}
-                    {% if message3 %} 
-                                <div class="alert alert-primary" role="alert">
-                                    {{ message3 }}<br/>
-                                </div>
-                    {% endif %}
-                    {% if message4 %} 
-                                <div class="alert alert-primary" role="alert">
-                                    {{ message4 }}<br/>
-                                </div>
-                    {% endif %}
-                  </div>
+        <div align='center'>
+          <div class="table">
+            Tabla respectiva de los <strong>Centro de Distribución:</strong>
             <br/>
-            <input class="btn btn-primary" type = "submit" name = "enviar" value = "Enviar"/>
-          </form>
+            {% for table in T1 %}
+              {{ table|safe }}
+            {% endfor %}
+          </div>
 
+          <div class="table">  
+            Tabla respectiva de los <strong>Puntos de Ventas:</strong>
+            <br/>
+            {% for table in T2 %}
+              {{ table|safe }}
+            {% endfor %}
+          </div>
+        </div> 
+
+        </p>
+          <hr style="width:75%;">
+        <p>
+
+        <form action="#trans" method="POST" id = trans>
+          {{ form.csrf_token }}
+              {{form.camion.label() }} {{form.camion()}} {{form.centro.label() }} {{form.centro()}}{{form.punto.label() }} 
+            <p>
+              {{form.punto(placeholder="Ej: 1,2,3")}}{{form.productos.label() }} {{form.productos(placeholder="Ej: 300,300,400")}} {{form.agregar()}}<br/>
+          </p>
+          
+                <div>
+                  Ingreso: {{ message }}<br/>
+                  {% if message2 %} 
+                    <div class="alert alert-primary" role="alert">
+                        {{ message2 }}<br/>
+                    </div>
+                  {% endif %}
+                  {% if message3 %} 
+                    <div class="alert alert-primary" role="alert">
+                        {{ message3 }}<br/>
+                    </div>
+                  {% endif %}
+                  {% if message4 %} 
+                    <div class="alert alert-primary" role="alert">
+                        {{ message4 }}<br/>
+                    </div>
+                  {% endif %}
+                </div>
+          <br/>
+          <input class="btn btn-primary" type = "submit" name = "enviar" value = "Enviar"/>
+        </form>
   </div>
 </div>
 
-
-
-</div>
 {% endblock%}

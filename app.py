@@ -78,8 +78,6 @@ def datos():
         centro = form.centro.data #Id_Centro int 
         punto = form.punto.data #Id_Punto string
         productos = form.productos.data #Cant_Productos string
-        
-        message = 'El camion '+str(camion)+' esta asignado a el Centro de distribucion '+str(centro)+' y va al Punto de venta '+str(punto)+' llevando '+str(productos)+' productos'
 
         if(validacionString(punto)==True and validacionString(productos)==True): #Valido que los Puntos y Productos se ingresaron correctamente
             print('Datos Validos')
@@ -103,6 +101,7 @@ def datos():
                 message4 = 'Ingrese la misma cantidad de Puntos de venta y Productos'
                         
             print(Camiones)
+            message = 'El camion '+str(camion)+' esta asignado a el Centro de distribucion '+str(centro)+' y va al Punto de venta '+str(punto)+' llevando '+str(productos)+' productos'
         else: 
             message2 = 'Ingrese un formato valido'
         #return redirect(url_for('datos'))
