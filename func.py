@@ -61,6 +61,18 @@ def ordenarPuntos(dic):
       Puntos[key2[i]]= key3[i]
   return Puntos
 
+def TablaPrincipal(Ruta):
+  val = Ruta.values()
+  val = list(val)
+  M =[]
+  for j in Ruta:
+        for key in val:
+              R = pd.DataFrame( (j, k, key[k]) for k in key.keys() )
+              R.columns = ["Centro","Camion", "Puntos a donde tiene que ir"]
+        M.append(R)
+  Tabla = pd.concat(M, axis=0)
+  return Tabla 
+
 def distancia_de_lista(venta_original):##Entra una lista en forma [('nodo1',x,y),('nodo2',x,y)]
     lista = []
     for i in venta_original:  #Recorre la lista

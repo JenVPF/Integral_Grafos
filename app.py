@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 #Llamada Funciones
 from forms import UploadForm, DetalleForm
-from func import lecturaArchivo, validacionString, validarPuntos, distancia_de_lista, CDconCoordenadasdePV, DistanciasEntreNodos, ordenarCentros, ordenarPuntos
+from func import lecturaArchivo, validacionString, validarPuntos, distancia_de_lista, CDconCoordenadasdePV, DistanciasEntreNodos, ordenarCentros, ordenarPuntos, TablaPrincipal
 from config import Config
 import pandas as pd
 app = Flask(__name__)
@@ -116,7 +116,20 @@ def rutas():
     puntos = {}
     centros = ordenarCentros(Asignacion)
     puntos = ordenarPuntos(Asignacion)
-    return render_template("rutas.html", Asignacion=Asignacion, centros=centros, puntos=puntos)
+
+    Ruta = {'1': {2: ['1', '79', '22', '14', '70', '97', '65', '0'], 
+              3: ['1', '100', '42', '71', '0'], 
+              4: ['1', '6', '23', '63', '11', '0'], 
+              5: ['1', '88', '5', '52', '37', '35', '0'], 
+              6: ['1', '28', '98', '0']},
+        '2': {7: ['1', '79', '22', '14', '70', '97', '65', '0'], 
+              8: ['1', '100', '42', '71', '0'], 
+              9: ['1', '6', '23', '63', '11', '0'], 
+              10: ['1', '88', '5', '52', '37', '35', '0']}}
+    
+    T = TablaPrincipal(Ruta)
+
+    return render_template("rutas.html", Asignacion=Asignacion, centros=centros, puntos=puntos, Ruta=Ruta, T=[T.to_html(classes='data', header="true")])
 
 if __name__ == '__main__':
     app.run(debug=True,port=3000)
