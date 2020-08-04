@@ -82,9 +82,9 @@ def CDconCoordenadasdePV(centro_cordenda,venta_cordenda,CDPV): # centro_cordenda
     listita=[]
   return GrafoCDPV
 
-def DistanciasEntreNodos(CDconCoordenadasdePV_): # {'1': [('1', 0, 0), ('79', 62, 50), ('22', 23, 77),
+def CaminoDeNodos(CDconCoordenadasdePV_): # {'1': [('1', 0, 0), ('79', 62, 50), ('22', 23, 77),
   DicGrafos = {}
-  DistanciasEntreNodos_ = {}
+  CaminoDeNodos_ = {}
   for CD in CDconCoordenadasdePV_:
     G = nx.Graph()
     G.add_weighted_edges_from(distancia_de_lista(CDconCoordenadasdePV_[CD]))
@@ -92,5 +92,63 @@ def DistanciasEntreNodos(CDconCoordenadasdePV_): # {'1': [('1', 0, 0), ('79', 62
     DicGrafos[CD] = G
     mst=nx.minimum_spanning_tree(G)
     nodelist=list(mst) # make a list of the nodes
-    DistanciasEntreNodos_[CD] = nodelist
-    return DistanciasEntreNodos_,DicGrafos
+    CaminoDeNodos_[CD] = nodelist
+    return CaminoDeNodos_,DicGrafos  # Dic con el camino por Grafo 
+
+
+def HojasDeRuta (CaminoDeNodos,PVarticulos,CDconCoordenadasdePV):
+  SumaDelCamion = 0
+  MaximoDelCamion = 1000
+  RutaCamion = {}
+  lista_caminos = []
+  Camion = 0
+
+  for CD in CaminoDeNodos:
+    RutaCamion[CD]={}
+    for x in range(0,len(CaminoDeNodos[CD])-1):
+      if CaminoDeNodos[CD][x] == CD:
+        for P in PVarticulos:
+          if P == CaminoDeNodos[CD][x+1]:
+            NodoSigui = CaminoDeNodos[CD][x+1]
+            lista_caminos.append(CaminoDeNodos[CD][x])
+            SumaDelCamion = SumaDelCamion + int(PVarticulos[P])
+
+      if CaminoDeNodos[CD][x] == NodoSigui:
+        for P in PVarticulos:
+          if MaximoDelCamion <= SumaDelCamion:
+            Camion = Camion + 1
+            lista_caminos.append('0')
+            if lista_caminos[0] != CD: 
+              lista_caminos.insert(0,CD)
+            RutaCamion[CD][Camion] = lista_caminos
+            lista_caminos = []
+            SumaDelCamion = 0 
+
+          if P == CaminoDeNodos[CD][x+1]:
+            NodoAnt = CaminoDeNodos[CD][x-1]
+            NodoSigui = CaminoDeNodos[CD][x+1]
+            lista_caminos.append(CaminoDeNodos[CD][x])
+            CaminoDeNodos[CD].remove(CaminoDeNodos[CD][x])
+            SumaDelCamion = SumaDelCamion + int(PVarticulos[P])
+
+
+          if CaminoDeNodos[CD][x+1] == '0':
+            Camion = Camion + 1
+            lista_caminos.insert(0,CD)
+            lista_caminos.append(CaminoDeNodos[CD][x])
+            lista_caminos.append('0')
+            RutaCamion[CD][Camion] = lista_caminos
+            return RutaCamion
+            
+
+def nodos_cordenadas(DicLista, lista_nodo):
+  Dic_nuevo ={}
+  for DC in DicLista:
+    lista = []
+    for i in DicLista[DC]:
+      for j in lista_nodo[DC]:
+        if j == i[0]:
+          lista.append(i)
+    Dic_nuevo[DC] = lista
+  return Dic_nuevo
+        
