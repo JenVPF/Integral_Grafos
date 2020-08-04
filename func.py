@@ -12,18 +12,24 @@ def lecturaArchivo(ar):
     return archivo
 
 def validacionString(cadena): 
-  if cadena.find(',') == -1: #Si no encuentra la ,
-    return False
+  if (len(cadena) == 1 and cadena >= chr(48) and cadena <= chr(57)):
+        return True
   else:
-    for i in cadena: 
-      if (i >= chr(32) and i <= chr(43)): 
-        return False 
-      elif (i >= chr(45) and i <= chr(47)):
-        return False 
-      elif (i >= chr(58) and i <= chr(254)):
-        return False 
+    if cadena.find(',') == -1: #Si no encuentra la ,
+      if (cadena >= chr(48) and cadena <= chr(57)):
+        return True
       else: 
-        return True 
+        return False
+    else:
+      for i in cadena: 
+        if (i >= chr(32) and i <= chr(43)): 
+          return False 
+        elif (i >= chr(45) and i <= chr(47)):
+          return False 
+        elif (i >= chr(58) and i <= chr(254)):
+          return False 
+        else: 
+          return True
 
 def validarPuntos(P,Pun):
     aux = []
@@ -65,6 +71,18 @@ def distancia_de_lista(venta_original):##Entra una lista en forma [('nodo1',x,y)
               distancia = round(distance.euclidean(axis,axis_2),5) #Calcula la distancia del nodo1 al nodo2
               lista.append( ( i[0], j[0], distancia ) ) #guarda en la lista en forma [(nodo1, nodo2, distancia)]
     return lista # Retorna [(nodo1, nodo2, distancia), (nodo2, nodo1, distancia)]
+
+def TablaPrincipal(Ruta):
+  val = Ruta.values()
+  val = list(val)
+  M =[]
+  for j in Ruta:
+        for key in val:
+              R = pd.DataFrame( (j, k, key[k]) for k in key.keys() )
+              R.columns = ["Centro","Camion", "Puntos a donde tiene que ir"]
+        M.append(R)
+  Tabla = pd.concat(M, axis=0)
+  return Tabla 
 
 def CDconCoordenadasdePV(centro_cordenda,venta_cordenda,CDPV): # centro_cordenda y venta_cordenda son listas [('nodo1',x,y),('nodo2',x,y)] y CDPV = {'1': ['79', '22', '14',... 
   GrafoCDPV = {} ##Crea un diccionario con llaves de Centros de Distribucion y contenido de todas las coordenadas de la cosa :)

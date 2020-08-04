@@ -2,18 +2,22 @@
 {% block content %}
 
 <div class="jumbotron">
-    <div>
-      <h1 class="display-4">Rutas Ingresadas</h1>
-      Asignacion: {{ Asignacion }}<br/>
-      <br/>
-      Centros: {{ centros }}<br/>
-      <br/>
-      Puntos: {{ puntos }}<br/>
-      <br/>
-    </div>
-  
-    
+  <div>
+    <h1>La siguiente tabla muestra el centro, el camion y la ruta mas corta que puede realizar respecto a las distancias</h1>
+    <p>En los "Puntos donde tiene que ir" el ultimo dato "0" indica el fin del recorrido (estacionamiento)</p>
   </div>
 
+  <div class="d-flex justify-content-center">
+    <div div class="table">
+      <strong>Rutas:</strong>
+      <br/>
+      {% for table in T %}
+        {{ table|safe }}
+      {% endfor %}
+    </div>
+  </div>
+
+  
+</div>
 
 {% endblock%}

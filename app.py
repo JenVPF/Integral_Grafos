@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 #Llamada Funciones
 from forms import UploadForm, DetalleForm
-from func import lecturaArchivo, validacionString, validarPuntos, distancia_de_lista, CDconCoordenadasdePV, ordenarCentros, ordenarPuntos, cambiar_formato, HojasDeRuta, CaminoDeNodos
+from func import lecturaArchivo, validacionString, validarPuntos, distancia_de_lista, CDconCoordenadasdePV, ordenarCentros, ordenarPuntos, cambiar_formato, HojasDeRuta, CaminoDeNodos, TablaPrincipal
 from config import Config
 import pandas as pd
 app = Flask(__name__)
@@ -100,7 +100,11 @@ def datos():
         else: 
             message2 = 'Ingrese un formato valido'
         #return redirect(url_for('datos'))
-    if request.method == 'POST' and request.form.get('enviar', True) == 'Enviar' :
+        if not Asignacion:
+            vacio = True #Esta Vacio
+        else:
+            vacio = False #No esta vacio
+    if request.method == 'POST' and request.form.get('enviar', True) == 'Enviar' and vacio==False:
         return redirect('rutas')
 
     return render_template("datos.html", form=form, message=message, message2=message2,message3=message3,message4=message4,T1=[C.to_html(classes='data', header="true")], T2=[P.to_html(classes='data', header="true")])
@@ -125,7 +129,9 @@ def rutas():
     CaminoNodos,G = CaminoDeNodos(GrafoCDPV)
     RutaCamion = HojasDeRuta (CaminoNodos,puntos,GrafoCDPV)
 
-    return render_template("rutas.html", Asignacion=Asignacion, centros=centros, puntos=puntos)
+    T=TablaPrincipal(RutaCamion)
+
+    return render_template("rutas.html", Asignacion=Asignacion, centros=centros, puntos=puntos, T=[T.to_html(classes='data', header="true")])
 
 if __name__ == '__main__':
     app.run(debug=True,port=3000)
