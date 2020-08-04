@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 #Llamada Funciones
 from forms import UploadForm, DetalleForm
-from func import lecturaArchivo, validacionString, validarPuntos, distancia_de_lista, CDconCoordenadasdePV, DistanciasEntreNodos, ordenarCentros, ordenarPuntos
+from func import lecturaArchivo, validacionString, validarPuntos, distancia_de_lista, CDconCoordenadasdePV, ordenarCentros, ordenarPuntos
 from config import Config
 import pandas as pd
 app = Flask(__name__)
@@ -37,8 +37,10 @@ def datos():
     #Formulario
     form = DetalleForm()
     #Variables
-    Centros = {} #Dic Centros {N:[x,y]}
-    Puntos = {} #Dic Puntos {N:[x,y]}
+    global Cent
+    global Punt
+    Cent = {} #Dic Centros {N:[x,y]}
+    Punt = {} #Dic Punt {N:[x,y]}
     Pun = [] #Arreglo de con IdPuntos
     Prod = [] #Arreglo con CantProductos
     datos = []
@@ -51,19 +53,22 @@ def datos():
     #Llenando los diccionarios Centros y Puntos
     for n in range(0,len(TablaI.index)): #Index es para el largo de las filas
         if(TablaI["T"][n]== 'C'):
-            Centros[TablaI["N"][n]]= TablaI["X,Y"][n]
+            Cent[TablaI["N"][n]]= TablaI["X,Y"][n]
         else:
-            Puntos[TablaI["N"][n]]= TablaI["X,Y"][n]
+            Punt[TablaI["N"][n]]= TablaI["X,Y"][n]
 
     #Opciones desplegables formulario
-    form.centro.choices = [(key, 'C'+str(key)) for key in Centros.keys()]
-    form.punto.choices = [(key, 'P'+str(key)) for key in Puntos.keys()]
+    form.centro.choices = [(key, 'C'+str(key)) for key in Cent.keys()]
+    form.punto.choices = [(key, 'P'+str(key)) for key in Punt.keys()]
+    print(Cent)
+    print('')
+    print(Punt)
 
     #TABLAS CENTROS Y PUNTOS 
     #REVISAR
-    C = pd.DataFrame( (key, Centros[key]) for key in Centros.keys() )
+    C = pd.DataFrame( (key, Cent[key]) for key in Cent.keys() )
     C.columns = ["N", "X,Y"]
-    P = pd.DataFrame( (key, Puntos[key]) for key in Puntos.keys() )
+    P = pd.DataFrame( (key, Punt[key]) for key in Punt.keys() )
     P.columns = ["N", "X,Y"]
 
     if request.method == 'POST' and form.validate_on_submit():
@@ -107,6 +112,9 @@ def rutas():
     #Puntos = { id : cant , id2 : cant }
     print('')
     print(chr(27)+"[;34m"+"Valores Asignados: ",Asignacion)
+    #VARIABLES GLOBALES
+    #Cent -> { IdCentro1: ['X', 'Y'], IdCentro2: ['X', 'Y'], IdCentro3: ['X', 'Y']}
+    #Punt -> { IdPunto1: ['X', 'Y'], IdPunto2: ['X', 'Y'], IdPunto2: ['X', 'Y']}
     centros = {}
     puntos = {}
     centros = ordenarCentros(Asignacion)
