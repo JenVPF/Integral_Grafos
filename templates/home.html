@@ -3,14 +3,32 @@
 {% block content %}
 
 <div class="jumbotron">
-  <h1 class="display-4">Grafos Trabajo Integral</h1>
-  <p class="lead">Tranpostes de productos
-      - Contruir hoja de ruta de manera eficiente, minimizando las distancias que recorren los camiones en la entrega de productos
-  </p>
+  <h1 class="display-4">Trabajo Integral</h1>
+  <h5>Instrucciones: </h5>
+    <p class="lead">
+      <ul>
+        <li>Primero debe cargar un archivo con extension .txt </li>
+        <li>El archivo tiene que tener formato T;N;X,Y, donde </li>
+          <ul>
+            <li>T es el tipo, 'C' si es un Centro y 'P' si es un punto </li>
+            <li>N es el identificador, el cual es un Numero entero</li>
+            <li>X,Y, son las coordenadas en numeros enteros</li>
+          </ul>
+        <li>Luego de cargar el archivo, haga click en Enviar y complete el formulario</li> 
+      </ul>
+    </p>
   <hr class="my-4">
-  <p>Se deben usar coordenadas GPS cargadas desde un archivo</p>
-  <a class="btn btn-primary btn-lg" href="{{ url_for('about')}}" role="button">Siguiente</a>
-  <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+  <a class="btn btn-primary btn-lg" href="{{ url_for('about')}}" role="button">Continuar</a>
+</div>
+<div class="jumbotron">
+  <h5>Grafos y Lenguajes formales</h5>
+  <h6>Grupo 4.B</h6>
+  <h6>Integrantes: </h6>
+  <ul>
+    <P><img src="/static/pinguino.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy"> Daniela Galleguillos</P>
+    <P><img src="/static/gato.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy"> Jennifer Portiño</P>
+    <P><img src="/static/panda.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy"> Diego Tapia</P>
+  </ul>
 </div>
 
 {% endblock%}
