@@ -125,7 +125,6 @@ def HojasDeRuta (CaminoDeNodos,PVarticulos,CDconCoordenadasdePV):
             SumaDelCamion = 0 
 
           if P == CaminoDeNodos[CD][x+1]:
-            NodoAnt = CaminoDeNodos[CD][x-1]
             NodoSigui = CaminoDeNodos[CD][x+1]
             lista_caminos.append(CaminoDeNodos[CD][x])
             CaminoDeNodos[CD].remove(CaminoDeNodos[CD][x])
@@ -151,4 +150,9 @@ def nodos_cordenadas(DicLista, lista_nodo):
           lista.append(i)
     Dic_nuevo[DC] = lista
   return Dic_nuevo
-        
+
+def cambiar_formato(Dic_PV): # {1: ['20', '-19'], 2: ['86', '45'], 3: ['-27', '32'], 4: ['-74', '60']}
+  lista = []
+  for i in Dic_PV:
+    lista.append((i,Dic_PV[i][0],Dic_PV[i][1]))
+  return lista  # [(1, '20', '-19'), (2, '86', '45'), (3, '-27', '32'), (4, '-74', '60')]
