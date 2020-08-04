@@ -11,19 +11,25 @@ def lecturaArchivo(ar):
     print(archivo)
     return archivo
 
-def validacionString(cadena): 
-  if cadena.find(',') == -1: #Si no encuentra la ,
-    return False
+def validacion(cadena): 
+  if (len(cadena) == 1 and cadena >= chr(48) and cadena <= chr(57)):
+    return True
   else:
-    for i in cadena: 
-      if (i >= chr(32) and i <= chr(43)): 
-        return False 
-      elif (i >= chr(45) and i <= chr(47)):
-        return False 
-      elif (i >= chr(58) and i <= chr(254)):
-        return False 
+    if cadena.find(',') == -1: #Si no encuentra la ,
+      if (cadena >= chr(48) and cadena <= chr(57)):
+        return True
       else: 
-        return True 
+        return False
+    else:
+      for i in cadena: 
+        if (i >= chr(32) and i <= chr(43)): 
+          return False 
+        elif (i >= chr(45) and i <= chr(47)):
+          return False 
+        elif (i >= chr(58) and i <= chr(254)):
+          return False 
+        else: 
+          return True
 
 def validarPuntos(P,Pun):
     aux = []
