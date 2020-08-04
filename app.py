@@ -94,8 +94,13 @@ def datos():
             message = 'El Centro de distribucion '+str(centro)+' y va a los Puntos de venta '+str(punto)+' llevando '+str(productos)+' productos respectivamente'
         else: 
             message2 = 'Ingrese un formato valido'
-        #return redirect(url_for('datos'))
-    if request.method == 'POST' and request.form.get('enviar', True) == 'Enviar' :
+        
+        if not Asignacion:
+            vacio = True #Esta Vacio
+        else:
+            vacio = False #No esta vacio
+
+    if request.method == 'POST' and request.form.get('enviar', True) == 'Enviar' and vacio==False :
         return redirect('rutas')
 
     return render_template("datos.html", form=form, message=message, message2=message2,message3=message3,message4=message4,T1=[C.to_html(classes='data', header="true")], T2=[P.to_html(classes='data', header="true")])
