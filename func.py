@@ -93,7 +93,7 @@ def CaminoDeNodos(CDconCoordenadasdePV_): # {'1': [('1', 0, 0), ('79', 62, 50), 
     mst=nx.minimum_spanning_tree(G)
     nodelist=list(mst) # make a list of the nodes
     CaminoDeNodos_[CD] = nodelist
-    return CaminoDeNodos_,DicGrafos  # Dic con el camino por Grafo 
+  return CaminoDeNodos_,DicGrafos  # Dic con el camino por Grafo 
 
 
 def HojasDeRuta (CaminoDeNodos,PVarticulos,CDconCoordenadasdePV):
