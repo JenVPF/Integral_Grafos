@@ -1,64 +1,75 @@
 {% extends "layout.html" %}
 {% block content %}
+<!--<div class="logmod__wrapper" id = trans>-->'
 
-<!--<div class="logmod__wrapper" id = trans>-->
-<div class="jumbotron" >
-  <div class="logmod__heading"> 
-    <h1 class="display-4">Archivo recibido</h1>
-        <hr style="width:75%;">
-      <p>A continuacion elija un <strong>Centro de Distribución</strong>, y elija los <strong>Puntos de Ventas</strong> que mostraran a en las siguientes <strong>Tablas:</strong> </p>
-      
-      <div class="logmod__container">  
-              
-        <div style="width:500px; padding:3px;">
-          <div class="table" style="width:245px; float:left;">
-            <p>Tabla respectiva de los <strong>Centro de Distribución:</strong></p>
-            <br/>
-            {% for table in T1 %}
-              {{ table|safe }}
-            {% endfor %}
-          </div>
-
-          <div class="table" style="width:245px; float:left;">  
-            <p>Tabla respectiva de los <strong>Puntos de Ventas:</strong></p>
-            <br/>
-            {% for table in T2 %}
-              {{ table|safe }}
-            {% endfor %}
-          </div>
-        </div>
-        <div>
-          <form action="#trans" method="POST" id = trans>
-            {{ form.csrf_token }}
-                {{form.centro.label() }} {{form.centro()}}{{form.punto.label() }} 
-              <p>
-                {{form.punto(placeholder="Ej: 1,2,3")}}{{form.productos.label() }} {{form.productos(placeholder="Ej: 300,300,400")}} {{form.agregar()}}<br/>
-            </p>
-            
-                  <div>
-                    Ingreso: {{ message }}<br/>
-                    {% if message2 %} 
-                      <div class="alert alert-primary" role="alert">
-                          {{ message2 }}<br/>
-                      </div>
-                    {% endif %}
-                    {% if message3 %} 
-                      <div class="alert alert-primary" role="alert">
-                          {{ message3 }}<br/>
-                      </div>
-                    {% endif %}
-                    {% if message4 %} 
-                      <div class="alert alert-primary" role="alert">
-                          {{ message4 }}<br/>
-                      </div>
-                    {% endif %}
-                  </div>
-            <br/>
-            <input class="btn btn-primary" type = "submit" name = "enviar" value = "Enviar"/>
-          </form>
-        </div>
-      </div>
+<div class="jumbotron">
+  <div>
+    <h2 class="text-center">Asignacion Puntos de Ventas a Centros de Distribucion</h2>
+    <hr style="width:75%;">
+    <p>A continuacion elija un <strong>Centro de Distribución</strong>, y elija los <strong>Puntos de Ventas</strong> que mostraran a en las siguientes <strong>Tablas:</strong> </p>
   </div>
+
+  <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center">
+
+      <div div class="table">
+        <strong>Centro de Distribución:</strong>
+        <br/>
+        {% for table in T1 %}
+          {{ table|safe }}
+        {% endfor %}
+      </div>
+  
+      <div  div class="table">
+        <strong>Puntos de Ventas:</strong>
+        <br/>
+        {% for table in T2 %}
+          {{ table|safe }}
+        {% endfor %}
+      </div>
+      
+    </div>
+  </div>
+
+  <hr style="width:75%;">
+
+  <div class="d-flex justify-content-center">
+    <form action="#trans" method="POST" id = trans>
+      {{ form.csrf_token }}
+      <div class="d-flex justify-content-center">Centro Distribucion:&nbsp;&nbsp;{{form.centro()}}</div>
+      <p></p>
+      Puntos de ventas:&nbsp;&nbsp;{{form.punto(placeholder="Ej: 1,2,3")}}&nbsp;&nbsp;&nbsp;&nbsp;Cantidad Productos:&nbsp;&nbsp;{{form.productos(placeholder="Ej: 300,300,400")}} {{form.agregar()}}<br/>
+      
+      
+      <div>
+        {% if message %} 
+          <div class="alert alert-primary" role="alert">
+            Ingreso: {{ message }}<br/>
+          </div>
+        {% endif %}
+        {% if message2 %} 
+          <div class="alert alert-primary" role="alert">
+              {{ message2 }}<br/>
+          </div>
+        {% endif %}
+        {% if message3 %} 
+          <div class="alert alert-primary" role="alert">
+              {{ message3 }}<br/>
+          </div>
+        {% endif %}
+        {% if message4 %} 
+          <div class="alert alert-primary" role="alert">
+              {{ message4 }}<br/>
+          </div>
+        {% endif %}
+      </div>
+      <br/>
+      <div class="d-flex justify-content-center">
+        <input class="btn btn-primary" type = "submit" name = "enviar" value = "Enviar"/>
+      </div>
+    </form>
+  </div>
+
 </div>
 
 {% endblock%}
