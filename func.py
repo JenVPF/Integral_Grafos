@@ -11,7 +11,7 @@ def lecturaArchivo(ar):
     print(archivo)
     return archivo
 
-def validacion(cadena): 
+def validacionString(cadena): 
   if (len(cadena) == 1 and cadena >= chr(48) and cadena <= chr(57)):
     return True
   else:
