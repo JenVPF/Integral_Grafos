@@ -111,7 +111,7 @@ def rutas():
     #Centro = { id : [PuntoA,PunetoB,PuntoC] }
     #Puntos = { id : cant , id2 : cant }
     print('')
-    print(chr(27)+"[;34m"+"Valores Asignados: ",Asignacion)
+    print(chr(27)+"[;32m"+"Valores Asignados: ",Asignacion)
     #VARIABLES GLOBALES
     #Cent -> { IdCentro1: ['X', 'Y'], IdCentro2: ['X', 'Y'], IdCentro3: ['X', 'Y']}
     #Punt -> { IdPunto1: ['X', 'Y'], IdPunto2: ['X', 'Y'], IdPunto2: ['X', 'Y']}
@@ -124,7 +124,6 @@ def rutas():
     GrafoCDPV = CDconCoordenadasdePV(centro_cordenda,punto_cordenda,centros)
     CaminoNodos,G = CaminoDeNodos(GrafoCDPV)
     RutaCamion = HojasDeRuta (CaminoNodos,puntos,GrafoCDPV)
-    print(RutaCamion)
 
     return render_template("rutas.html", Asignacion=Asignacion, centros=centros, puntos=puntos)
 

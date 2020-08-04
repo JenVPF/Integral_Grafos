@@ -73,11 +73,11 @@ def CDconCoordenadasdePV(centro_cordenda,venta_cordenda,CDPV): # centro_cordenda
   for i in CDPV:
     for j in centro_cordenda:
       if j[0]==i:
-        listita.append(j) 
+        listita.append(j)
       for d in CDPV[i]:
         if j[0] == d:
           listita.append(j)
-    listita.append(('0', 1000,1000))  # Fin de cada CD (donde se guardan los camiones) 
+    listita.append(('0', 1000,1000)) #fin de cada CD (donde se guardan los camiones) 
     GrafoCDPV[i] = listita
     listita=[]
   return GrafoCDPV
@@ -143,5 +143,5 @@ def HojasDeRuta (CaminoDeNodos,PVarticulos,CDconCoordenadasdePV):
 def cambiar_formato(Dic_PV): # {1: ['20', '-19'], 2: ['86', '45'], 3: ['-27', '32'], 4: ['-74', '60']}
   lista = []
   for i in Dic_PV:
-    lista.append((i,Dic_PV[i][0],Dic_PV[i][1]))
+    lista.append((str(i),int(Dic_PV[i][0]),int(Dic_PV[i][1])))
   return lista  # [(1, '20', '-19'), (2, '86', '45'), (3, '-27', '32'), (4, '-74', '60')]
