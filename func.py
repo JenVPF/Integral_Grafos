@@ -140,17 +140,6 @@ def HojasDeRuta (CaminoDeNodos,PVarticulos,CDconCoordenadasdePV):
             return RutaCamion
             
 
-def nodos_cordenadas(DicLista, lista_nodo):
-  Dic_nuevo ={}
-  for DC in DicLista:
-    lista = []
-    for i in DicLista[DC]:
-      for j in lista_nodo[DC]:
-        if j == i[0]:
-          lista.append(i)
-    Dic_nuevo[DC] = lista
-  return Dic_nuevo
-
 def cambiar_formato(Dic_PV): # {1: ['20', '-19'], 2: ['86', '45'], 3: ['-27', '32'], 4: ['-74', '60']}
   lista = []
   for i in Dic_PV:
