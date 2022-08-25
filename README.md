@@ -1,7 +1,7 @@
 ﻿# Trabajo Integral Grafos
 ## Aplicación web Flask
 
-Esta es una aplicación web para una empresa de transportes.
+Esta es una aplicación web, que determina rutas a traves de grafos. 
 
 ## Instalación de dependencias
 
